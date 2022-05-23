@@ -1,0 +1,36 @@
+---
+- name: This playbook contains a single play
+  hosts: cisco:arista
+  gather_facts: false
+
+  tasks:
+#  - eos_command:
+#      commands: show ip arp
+#    register: show_ip_eos
+#    when: ansible_network_os == 'eos'
+
+
+  - cisco.ios.ios_command:
+      commands: show ip arp
+    register: show_ip_arp_ios
+    when: ansible_network_os == 'ios'
+ 
+
+
+#  - junos_command:
+#      commands: show ip arp
+#    register: show_ip_jnos
+#    when: ansible_network_os == 'jnos'
+#
+
+  - name: Print the registered output
+    ansible.builtin.debug:
+      var: show_ip_arp_ios.stdout_lines
+    
+    when: ansible_network_os == 'ios'
+
+
+
+
+
+

@@ -1,0 +1,16 @@
+---
+- name: This playbook operates against the cisco group
+  hosts: cisco:arista
+  gather_facts: false
+
+  tasks:
+  - cisco.ios.ios_command:
+      commands:
+        - show version
+        - show lldp neighbors
+    register: output
+    when: ansible_network_os == "ios"
+   
+
+  - ansible.builtin.debug:
+      var: output

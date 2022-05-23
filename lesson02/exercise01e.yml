@@ -1,0 +1,44 @@
+---
+- name: This playbook executes on cisco3 host
+  hosts: cisco3
+  gather_facts: true
+  vars_files:
+    my_vars.yml
+
+
+  tasks:
+    - name: This task prints the ansible_facts to stdout
+      ansible.builtin.debug:
+        var: ansible_facts
+
+
+    - name:  This task prints ansible_facts. net_all_ipv4_addresses to stdout
+      ansible.builtin.debug:
+        var: ansible_facts.net_all_ipv4_addresses
+
+    - name: Print out the ansible_network_os variable
+      ansible.builtin.debug:
+        var: ansible_network_os
+
+
+    - name: Print out the ansible host variable
+      ansible.builtin.debug:
+        var: ansible_host
+
+
+
+    - name: Print out desired eos version
+      ansible.builtin.debug:
+        var: desired_ios_version
+
+
+
+    - name: Create a new variable
+      ansible.builtin.set_fact:
+        device_hostname: "{{ inventory_hostname }}.cmich.edu "  
+      tags: hostname
+
+    - name: Printing device hostname
+      ansible.builtin.debug:
+        var: device_hostname
+      tags: hostname

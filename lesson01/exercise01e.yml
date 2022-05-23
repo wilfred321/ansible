@@ -1,0 +1,4 @@
+---
+network_devices: 
+  - { 'host': 'cisco1', 'username': 'ansible', 'password': 'ansible', 'device_type': 'IOS', 'use_session_log': true,'ip_address': ['10.1.1.1','10.2.2.2','10.3.3.3']}
+  - {'host': 'arista1', 'username': 'ansible', 'password': 'ansible', 'device_type': 'EOS' , 'use_session_log': false, 'ip_address': ['10.1.1.1','3.2.2.2','5.4.5.6']}

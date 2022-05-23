@@ -1,0 +1,10 @@
+---
+- name: Group vars
+  hosts: cisco
+  gather_facts: false
+
+
+  tasks:
+  - name: Print BGP ASN for cisco hosts
+    ansible.builtin.debug:
+      msg: "The ASN for {{inventory_hostname}} is {{bgp_asn}} and the router_id is {{bgp_router_id}}"

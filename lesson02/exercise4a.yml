@@ -1,0 +1,20 @@
+---
+- name: This playbook prompts a user for confirm password
+  hosts: cisco
+  gather_facts: false
+
+
+  tasks:
+  - cisco.ios.ios_command:
+      commands:
+      - command: clear logging
+        prompt: confirm
+        answer: "y"
+    register: clear_logging_output
+    when: inventory_hostname in ['cisco2','cisco3']
+
+  - name: Print the result
+    ansible.builtin.debug:
+      var: clear_logging_output
+    when: inventory_hostname in ['cisco2','cisco3']
+

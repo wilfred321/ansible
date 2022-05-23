@@ -1,0 +1,2 @@
+---
+rt1: {'host': 'cisco1','username': 'ansible','password': 'ansible','device_type': 'IOS-XE','use_session_log': False}

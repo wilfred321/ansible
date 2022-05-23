@@ -1,0 +1,9 @@
+---
+- name: Group vars
+  hosts: cisco
+  gather_facts: false
+
+
+  tasks:
+    - ansible.builtin.debug:
+        msg: "The ASN for {{inventory_hostname}} is {{bgp_asn}}"

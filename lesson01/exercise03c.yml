@@ -1,0 +1,26 @@
+---
+- name: Exercise 03c 
+  hosts: localhost
+  gather_facts: true
+
+
+  tasks:
+    - name: Printing ansible host to stdout
+      ansible.builtin.debug:
+        var: ansible_host
+
+
+- name: Another Play
+  hosts: cisco
+  gather_facts: false
+
+
+  tasks:
+  - name: Print ansible connection variable
+    ansible.builtin.debug:
+      var: ansible_connection
+
+
+  - name: Print ansible host variable
+    ansible.builtin.debug:
+      var: ansible_host

@@ -1,0 +1,34 @@
+---
+- name: This playbook prompts a user for confirm password
+  hosts: cisco:arista
+  gather_facts: false
+
+
+  tasks:
+  - cisco.ios.ios_command:
+      commands:
+      - command: show interface status 
+
+
+    register: interface_status
+    when: inventory_hostname in ['cisco2']
+
+  - name: Print the result
+    ansible.builtin.set_fact:
+      result: "{{ interface_status.stdout_lines[0][23]}}"
+    when: inventory_hostname in ['cisco2']
+  
+
+  - name: Strip string intoo list of strings
+    ansible.builtin.set_fact:
+       my_var: "{{result.split()}}"
+    when: inventory_hostname in ['cisco2']
+
+  - name: Print my_variable
+    ansible.builtin.debug:
+      msg: 
+        - "Interface: {{my_var[0]}}"
+        - "state: {{my_var[2]}}"
+
+    when: inventory_hostname in ['cisco2']
+

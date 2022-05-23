@@ -1,0 +1,10 @@
+---
+- name: Exercise 03b 
+  hosts: localhost
+  gather_facts: false
+
+
+  tasks:
+    - name: Printing ansible host to stdout
+      ansible.builtin.debug:
+        var: ansible_host
