@@ -1,0 +1,24 @@
+---
+- name: Loop
+  hosts: cisco
+  gather_facts: false
+  vars: 
+    interfaces:
+            - "GigabitEthernet 0/0"
+            - "GigabitEthernet 1/0/1"
+            - "Vlan1"
+
+
+  tasks:
+  - cisco.ios.ios_command:
+      commands: "show interface {{ item }} stats"
+    register: result
+    when: item == 'Vlan1'
+    loop: "{{ interfaces }}"
+
+ 
+
+  - ansible.builtin.debug:
+      var: result.results[2].stdout_lines
+
+

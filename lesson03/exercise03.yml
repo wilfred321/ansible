@@ -1,0 +1,35 @@
+---
+- name: This playbook shows lldp neighbors
+  hosts: cisco
+  gather_facts: false
+
+  tasks:
+  - cisco.ios.ios_command:
+          commands: show lldp neighbors
+    register: output
+    when: inventory_hostname in ['cisco1','cisco2']
+
+  - name: Set fact 1 
+    ansible.builtin.set_fact:
+            output_lines: "{{output.stdout_lines[0]}}"
+    when: inventory_hostname in ['cisco1','cisco2']
+
+  - name: Set fact 2 
+    ansible.builtin.set_fact:
+            intended_line: "{{item}}"
+    when: "inventory_hostname in ['cisco1','cisco2'] and 'Gi1/0/48' in item"
+    loop: "{{ output_lines }}" 
+    
+
+  - name: Set fact 3
+    ansible.builtin.set_fact:
+          result: "{{ intended_line.split()}}"
+    when: intended_line is defined
+
+  - ansible.builtin.debug:
+          msg:
+                  - "Remote Device: {{result[0][:20]}}"
+                  - "Remote Port: {{result[1]}}"
+                  - "Remote Interface: {{result[3]}}"
+    when: result is defined
+
