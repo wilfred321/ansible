@@ -1,0 +1,47 @@
+- name: Layer2 configuration
+  hosts: cisco
+  gather_facts: false
+
+  tasks:
+  - block:
+   
+      - cisco.ios.ios_command:
+          commands:
+            - vlan {{vlan.number}}
+            - name {{vlan.name}}
+
+      - cisco.ios.ios_l2_interfaces:
+          state: gathered
+        register: result
+     
+
+      - ansible.builtin.debug:
+          var: result      
+
+      - cisco.ios.ios_l2_interfaces:
+          config:
+            - name: "{{ item }}"
+              mode : "{{ mode }}"
+          state: deleted
+        loop: "{{ interfaces }}"
+    tags: never    
+
+  - cisco.ios.ios_l3_interfaces:
+      config:
+        - name: vlanif 10
+          ipv4:
+            - address: 192.168.1.10/24
+              secondary: false
+      state: deleted
+
+
+  - cisco.ios.ios_l3_interfaces:
+        state: gathered
+    register: result
+
+  - ansible.builtin.debug:
+        var: result 
+   
+   
+    
+  

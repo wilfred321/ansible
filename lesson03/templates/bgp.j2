@@ -1,0 +1,13 @@
+!
+feature bgp
+router bgp {{bgp_asn}}
+  router-id {{ loopback101_ip_address }}
+  address-family ipv4 unicast
+   {% for ip_address in bgp_advertise %}
+    network {{ip_address}}
+     {%endfor%}
+  neighbor {{bgp_peer_ip}}
+    remote-as {{bgp_asn}}
+    {{description}}
+    address-family ipv4 unicast
+!

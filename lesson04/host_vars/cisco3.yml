@@ -1,0 +1,5 @@
+hostname: "cisco3.tmp"
+
+interface:
+  ip_address: 19.168.1.3
+  net_mask: "{{netmask}}"

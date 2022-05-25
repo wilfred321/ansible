@@ -1,0 +1,7 @@
+    # - name: Configure hostname and domain names
+      #   cisco.ios.ios_config:
+      #     lines:
+      #       - hostname {{ hostname }}
+      #       - ip domain-name {{ domain_name}}
+      #       - ip name-server {{ item }}
+      #     loop: "{{ name_servers }}"

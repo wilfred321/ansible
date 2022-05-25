@@ -1,0 +1,13 @@
+name_servers:
+- 8.8.8.8
+- 4.4.4.4
+
+domain_name:
+  cmich_lab.edu
+
+vlan:
+  name: ansible
+  number: 10
+
+netmask: 255.255.255.0
+description: ansible_test_vlan

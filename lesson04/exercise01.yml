@@ -1,0 +1,45 @@
+- name: This playbook configures login banner on cisco devices
+  hosts: cisco
+  gather_facts: off
+
+
+  tasks: 
+  - block:
+      - name: configure login banner
+        cisco.ios.ios_banner:
+          banner: login
+          text: |
+                ######################################
+                    CENTRAL MICHIGAN UNIVERISTY
+                    Banner! Banner!! Banner!!!
+                ######################################
+
+          state: present
+        notify: wr_mem
+          
+
+      # - include_tasks: wr_mem.yml
+
+ 
+    when: inventory_hostname == 'cisco2'
+
+  handlers:
+  - name: wr_mem
+    cisco.ios.ios_command:
+      commands: write mem
+    changed_when: true
+  
+  # - ansible.builtin.debug:
+  #     msg: "This never runs"
+  #   tags: never
+    
+
+        
+ 
+
+
+ 
+   
+    
+      
+      

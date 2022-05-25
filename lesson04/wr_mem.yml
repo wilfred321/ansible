@@ -1,0 +1,5 @@
+
+- name: wr_mem
+  cisco.ios.ios_config:
+   save_when: changed
+  

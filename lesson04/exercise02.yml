@@ -1,0 +1,28 @@
+- name: This playbook configures domain names and hostname on cisco devices
+  hosts: cisco
+  gather_facts: false
+
+  tasks:
+  - block:
+    - name: Configure hostname and domain names
+      cisco.ios.ios_config:
+        lines:
+            - hostname {{ hostname }}
+            - ip domain-name {{ domain_name}}
+            - ip name-server {{ item }}
+      loop: "{{ name_servers }}"
+         
+  
+      
+    # - ansible.builtin.fail:
+    #     msg: "This task was failed on purpose"
+    rescue:
+    - name: rolling back configuration
+      cisco.ios.ios_command:
+        commands:
+        - command: configure replace nvram:startup-config
+          prompt: are sure you want to proceed
+          answer: 'y'
+
+
+    when: inventory_hostname in ['cisco2']

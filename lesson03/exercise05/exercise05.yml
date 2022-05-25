@@ -1,0 +1,56 @@
+- name: This playbook configures interfaces and BGP
+  hosts: cisco
+  gather_facts: true
+  vars:
+     combine: false
+
+
+  tasks:
+  - block: 
+      - name: Generating interface configuration
+        ansible.builtin.template:
+          src: ~/ansible/playbooks/lesson03/templates/interfaces.j2
+          dest: ~/ansible/playbooks/lesson03/CFGS/{{inventory_hostname}}/{{inventory_hostname}}_interfaces.txt
+
+      - name: Generating BGP configuration
+        ansible.builtin.template:
+          src: ~/ansible/playbooks/lesson03/templates/bgp.j2
+          dest: ~/ansible/playbooks/lesson03/CFGS/{{inventory_hostname}}/{{inventory_hostname}}_bgp.txt
+
+      
+
+      - name: Print success message
+        ansible.builtin.debug:
+          msg: " Template generated successfully!"
+
+      #check if the interfaces.txt file exist
+     
+      - name: Check if files exists
+        import_tasks: check_file_exist.yml
+
+      - name: set combine to  true if files exist
+        ansible.builtin.set_fact:
+          combine: true
+        when: interfaces_txt.stat.exists == true and bgp_txt.stat.exists == true
+
+      - name: Proceed to combine
+        ansible.builtin.assemble:
+          src: ~/ansible/playbooks/lesson03/CFGS/{{inventory_hostname}}
+          dest: ~/ansible/playbooks/lesson03/CFGS/{{inventory_hostname}}/combined.txt
+          delimiter: ######## FRAGMENT START #########
+        when: combine == true
+
+
+
+      # - name: Combine fragments when files exist
+            
+    when: inventory_hostname in ['cisco1','cisco2']
+    rescue:
+      - name: Catch error
+        ansible.builtin.debug:
+          msg: "There was an error in your template generation task"
+
+  
+ 
+
+    

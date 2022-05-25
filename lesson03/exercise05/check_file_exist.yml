@@ -1,0 +1,14 @@
+
+
+
+#check if the interfaces.txt file exist
+- name: Check if file exists
+  ansible.builtin.stat:
+    path: ~/ansible/playbooks/lesson03/CFGS/{{inventory_hostname}}/{{inventory_hostname}}_interfaces.txt
+  register: interfaces_txt
+  
+#check if the bgp.txt file exist
+- name: Check if file exists
+  ansible.builtin.stat:
+    path: ~/ansible/playbooks/lesson03/CFGS/{{inventory_hostname}}/{{inventory_hostname}}_bgp.txt
+  register: bgp_txt

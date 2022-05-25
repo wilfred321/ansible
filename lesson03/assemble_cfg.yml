@@ -1,0 +1,16 @@
+---
+- name: ansible configuration files
+  hosts: cisco 
+  gather_facts: false
+
+
+
+  tasks:
+  - ansible.builtin.assemble:
+          #src: ~/fragments
+          #dest: ~/combined.txt
+      src: ~/ansible/playbooks/lesson03/CFGS
+      dest: ~/ansible/playbooks/lesson03/CFGS/combined.txt
+      delimiter: '#### START FRAGMEMT ####'
+      
+

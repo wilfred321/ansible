@@ -1,0 +1,2 @@
+loopback_netmask: 32
+eth_netmask: 30

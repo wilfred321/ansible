@@ -1,0 +1,10 @@
+hostname: "cisco2.tmp"
+
+interfaces:
+   - [int: "vlanif 10", ip: 192.168.1.10]
+   - [int: "vlanif 12", ip: 192.168.1.12]
+
+mode: access
+  # ip_address: 19.168.1.2
+  # net_mask: "{{netmask}}"
+  # mode: access

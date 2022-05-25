@@ -1,0 +1,5 @@
+
+- name: fail when delay is 10
+  ansible.builtin.fail:
+    msg: "This task failed"
+  
